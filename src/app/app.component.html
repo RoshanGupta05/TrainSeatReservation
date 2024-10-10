@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>🎟 Train Seat Reservation System 🎟</h1>
+
+  <!-- Reservation Form -->
+  <div class="input-section">
+    <div class="input-group">
+      <label for="seats">Number of Seats:</label>
+      <input type="number" [(ngModel)]="numberOfSeats" min="1" max="7" />
+    </div>
+    <button (click)="reserveSeats()" class="reserve-button">Reserve</button>
+  </div>
+
+  <!-- Booking Messages -->
+  <div *ngIf="bookedSeats.length > 0" class="message success">
+    <h3>
+      Reserved Seats:
+      <span class="highlight">{{ bookedSeats.join(', ') }}</span>
+    </h3>
+  </div>
+  <div *ngIf="bookingFailed" class="message error">
+    <h3>Failed to reserve seats. Try fewer seats or check availability.</h3>
+  </div>
+
+  <!-- Seat Layout -->
+  <div class="seat-layout">
+    <h2>Select Your Seats:</h2>
+    <div class="row" *ngFor="let row of getSeatRows(); let rowIndex = index">
+      <div
+        *ngFor="let seat of row"
+        class="seat"
+        [ngClass]="{ booked: seat.booked }"
+        [title]="seat.booked ? 'Already Booked' : 'Available'"
+        [style.cursor]="seat.booked ? 'not-allowed' : 'pointer'"
+      >
+        {{ seat.id }}
+      </div>
+    </div>
+  </div>
+</div>
